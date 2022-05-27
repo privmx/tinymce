@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Added
-- New `editor.undoManager.fireIfChanged` API to fire change event only if the last undoManager content layer is diffrent from the current editor content #TINY-8641
+- New `dispatchIfChanged` UndoManager API to fire the `change` event if the last UndoManager content layer is different from the current editor content #TINY-8641
 
 ### Changed
 - Toggling fullscreen mode with the `fullscreen` plugin now also fires the `ResizeEditor` event #TINY-8701
