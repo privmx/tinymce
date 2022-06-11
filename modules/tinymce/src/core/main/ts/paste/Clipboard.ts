@@ -205,6 +205,42 @@ const insertClipboardContent = (editor: Editor, clipboardContent: ClipboardConte
   if (plainTextMode) {
     pasteText(editor, content);
   } else {
+    // Remove base64 data that is useless, but takes a lot of space
+    content = content.replace(/o:gfxdata="[^"]*"/g, '');
+
+    // Convert ms word lists to <ul> and <ol>
+    content = content.replace(/<!\[if !supportLists\]>(.|[\r\n])*?<!\[endif\]>/g, (str) => {
+      return str.includes('mso-bidi-theme-font') ? '<begin-ol-li />' : '<begin-ul-li />';
+    });
+    content = content.replace(/<p class=MsoListParagraph\b[^>]*(level[0-9]+\b)[^>]*><begin-ol-li \/>((.|[\r\n])*?)<\/p>/g, '<ol><li $1>$2</li></ol>');
+    content = content.replace(/<p class=MsoListParagraph\b[^>]*(level[0-9]+\b)[^>]*><begin-ul-li \/>((.|[\r\n])*?)<\/p>/g, '<ul><li $1>$2</li></ul>');
+    content = content.replace(/<p class=MsoListParagraphCxSpFirst[^>]*(level[0-9]+\b)[^>]*><begin-ol-li \/>((.|[\r\n])*?)<\/p>/g, '<custom-ol><li $1>$2</li>');
+    content = content.replace(/<p class=MsoListParagraphCxSpFirst[^>]*(level[0-9]+\b)[^>]*><begin-ul-li \/>((.|[\r\n])*?)<\/p>/g, '<custom-ul><li $1>$2</li>');
+    content = content.replace(/<p class=MsoListParagraphCxSpLast[^>]*(level[0-9]+\b)[^>]*><begin-ol-li \/>((.|[\r\n])*?)<\/p>/g, '<li $1>$2</li></custom-ol>');
+    content = content.replace(/<p class=MsoListParagraphCxSpLast[^>]*(level[0-9]+\b)[^>]*><begin-ul-li \/>((.|[\r\n])*?)<\/p>/g, '<li $1>$2</li></custom-ul>');
+    content = content.replace(/<p class=MsoListParagraphCxSpMiddle[^>]*(level[0-9]+\b)[^>]*><begin-ul-li \/>((.|[\r\n])*?)<\/p>/g, '<li $1>$2</li>');
+    content = content.replace(/<p class=MsoListParagraphCxSpMiddle[^>]*(level[0-9]+\b)[^>]*><begin-ol-li \/>((.|[\r\n])*?)<\/p>/g, '<li $1>$2</li>');
+    content = content.replace(/<span(\s)lang=EN-US style='mso-ansi-language:EN-US'>/g, '');
+    content = content.replace(/<o:p><\/o:p><\/span>/g, '');
+    let currLevel = 1;
+    content = content.replace(/<custom-(u|o)l>((.|[\r\n])*?)<\/custom-(u|o)l>/g, (_str, type, inner) => {
+      const lis = inner.split('</li>').filter((s) => s.trim().length > 0).map((s) => {
+        s = s.trim() + '</li>';
+        const level = parseInt(s.replace(/^((.|[\r\n])*?)level([0-9]+)\b((.|[\r\n])*?)$/g, '$3'), 10);
+        const liStr = s.replace(/ level[0-9]+\b/g, '');
+        if (level > currLevel) {
+          currLevel = level;
+          return `<${type}l>${liStr}`;
+        }
+        if (level < currLevel) {
+          currLevel = level;
+          return `${liStr}</${type}l>`;
+        }
+        return liStr;
+      });
+      return `<${type}l>${lis.join('\n')}</${type}l>`;
+    });
+
     pasteHtml(editor, content, isInternal);
   }
 };

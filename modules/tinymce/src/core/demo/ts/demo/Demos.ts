@@ -6,6 +6,7 @@ import FixedToolbarContainerDemo from './FixedToolbarContainerDemo';
 import FullDemo from './FullDemo';
 import IframeDemo from './IframeDemo';
 import InlineDemo from './InlineDemo';
+import PrivmxDemo from './PrivmxDemo';
 import ResponsiveDemo from './ResponsiveDemo';
 import ShadowDomDemo from './ShadowDomDemo';
 import ShadowDomInlineDemo from './ShadowDomInlineDemo';
@@ -26,8 +27,9 @@ window.demos = {
   TinyMceDemo,
   AnnotationsDemo,
   SourceDumpDemo,
+  PrivmxDemo,
   ResponsiveDemo,
   StickyToolbarDemo,
   ShadowDomDemo,
-  ShadowDomInlineDemo
+  ShadowDomInlineDemo,
 };

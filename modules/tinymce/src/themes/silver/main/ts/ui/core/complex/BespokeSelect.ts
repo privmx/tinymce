@@ -61,6 +61,8 @@ export interface SelectSpec {
   isInvalid: (item: FormatterFormatItem) => boolean;
 
   dataset: SelectDataset;
+
+  classes?: string[];
 }
 
 export interface SelectData {
@@ -159,6 +161,8 @@ const createSelectButton = (editor: Editor, backstage: UiFactoryBackstage, spec:
     spec.updateText(comp);
   });
 
+  const classes = spec.classes ? spec.classes : [];
+
   return renderCommonDropdown(
     {
       text: spec.icon.isSome() ? Optional.none() : spec.text,
@@ -170,7 +174,7 @@ const createSelectButton = (editor: Editor, backstage: UiFactoryBackstage, spec:
       getApi,
       columns: 1,
       presets: 'normal',
-      classes: spec.icon.isSome() ? [] : [ 'bespoke' ],
+      classes: spec.icon.isSome() ? [ ...classes ] : [ 'bespoke', ...classes ],
       dropdownBehaviours: []
     },
     ToolbarButtonClasses.Button,

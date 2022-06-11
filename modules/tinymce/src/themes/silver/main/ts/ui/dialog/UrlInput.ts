@@ -262,14 +262,18 @@ export const renderUrlInput = (
     ]),
     fieldBehaviours: Behaviour.derive([
       Disabling.config({
-        disabled: () => !spec.enabled || providersBackstage.isDisabled(),
+        disabled: () => spec.filetype !== 'file' ? true : (!spec.enabled || providersBackstage.isDisabled()),
         onDisabled: (comp) => {
           AlloyFormField.getField(comp).each(Disabling.disable);
-          memUrlPickerButton.getOpt(comp).each(Disabling.disable);
+          if (spec.filetype === 'file') {
+            memUrlPickerButton.getOpt(comp).each(Disabling.disable);
+          }
         },
         onEnabled: (comp) => {
           AlloyFormField.getField(comp).each(Disabling.enable);
-          memUrlPickerButton.getOpt(comp).each(Disabling.enable);
+          if (spec.filetype === 'file') {
+            memUrlPickerButton.getOpt(comp).each(Disabling.enable);
+          }
         }
       }),
       ReadOnly.receivingConfig(),

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>TinyMCE PrivMX Demo Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+      html, body, main, #ephox-ui {
+        height: 100%;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      @font-face {
+        font-family: "Aneba";
+        font-style: italic;
+        font-weight: 700;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Mediumitalic.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: normal;
+        font-weight: 700;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Medium.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: italic;
+        font-weight: 400;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Italic.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: italic;
+        font-weight: 500;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Mediumitalic.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: normal;
+        font-weight: 500;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Medium.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: normal;
+        font-weight: 400;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Regular.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: normal;
+        font-weight: 600;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Medium.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: italic;
+        font-weight: 600;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-Mediumitalic.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: italic;
+        font-weight: 200;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-UltraLightitalic.ttf");
+      }
+
+      @font-face {
+        font-family: "Aneba";
+        font-style: normal;
+        font-weight: 200;
+        src: url("//127.0.0.1:8080/Aneba_Family/Aneba_TTF/privmx-UltraLight.ttf");
+      }
+
+  </style>
+</head>
+
+<body>
+  <main>
+    <div id="ephox-ui">
+      <textarea>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed augue velit. Sed viverra aliquet fringilla. Duis quis turpis rutrum, auctor
+          diam vitae,
+          pellentesque arcu. Pellentesque vel ipsum a urna condimentum tincidunt ut bibendum metus. Ut eu ipsum faucibus sapien tempor ullamcorper. Donec
+          tempor
+          fermentum posuere. Suspendisse vel vestibulum nisl, a auctor nisi. Phasellus in aliquam ex, nec vulputate orci. Fusce non pharetra magna. Sed id
+          felis et
+          magna ultricies dapibus. Nunc varius ipsum at nunc lobortis viverra. Nulla neque sem, tincidunt nec tempus et, tempus sagittis nisl. Vivamus
+          dolor ligula,
+          euismod at rhoncus sed, consequat eget nibh. Nam massa dui, dictum sit amet erat at, mollis sodales orci. Vestibulum sodales dictum felis, sed
+          vulputate
+          turpis condimentum sed.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed augue velit. Sed viverra aliquet fringilla. Duis quis turpis rutrum, auctor
+          diam vitae,
+          pellentesque arcu. Pellentesque vel ipsum a urna condimentum tincidunt ut bibendum metus. Ut eu ipsum faucibus sapien tempor ullamcorper. Donec
+          tempor
+          fermentum posuere. Suspendisse vel vestibulum nisl, a auctor nisi. Phasellus in aliquam ex, nec vulputate orci. Fusce non pharetra magna. Sed id
+          felis et
+          magna ultricies dapibus. Nunc varius ipsum at nunc lobortis viverra. Nulla neque sem, tincidunt nec tempus et, tempus sagittis nisl. Vivamus
+          dolor ligula,
+          euismod at rhoncus sed, consequat eget nibh. Nam massa dui, dictum sit amet erat at, mollis sodales orci. Vestibulum sodales dictum felis, sed
+          vulputate
+          turpis condimentum sed.
+        </p></textarea>
+    </div>
+    <script src="../../../../js/tinymce/tinymce.js"></script>
+    <script src="../../../../scratch/demos/core/demo.js"></script>
+    <script>
+      (async () => {
+        document.addEventListener("click", event => {
+          if (event.target.classList.contains("tox-dialog-wrap__backdrop")) {
+            const next = event.target.nextElementSibling;
+            if (next && next.classList.contains("tox-dialog")) {
+              const btn = next.querySelector(".tox-dialog__header button");
+              btn.click();
+            }
+          }
+        });
+        const editor = (await demos.PrivmxDemo())[0];
+        window.editor = editor;
+        window.gc = () => {
+          console.log(editor.getContent());
+        };
+      })();
+    </script>
+  </main>
+</body>
+
+</html>

@@ -82,5 +82,6 @@ const tab = (): Dialog.TabSpec => {
 };
 
 export {
-  tab
+  tab,
+  description
 };

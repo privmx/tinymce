@@ -25,7 +25,7 @@
 @toolbar-button-height: 34px;
 @toolbar-button-spacing-x: 0;
 @toolbar-button-spacing-y: 2px;
-@toolbar-button-hover-background-color: multiply(white, contrast(@background-color, fade(@color-black, 15), fade(@color-black, 85)));
+@toolbar-button-hover-background-color: var(--custom-select-item-hover-bg, hsla(var(--preview-panel-input-bg-h, 0), var(--preview-panel-input-bg-s, .1%), var(--preview-panel-input-bg-l, 87%), .3));
 @toolbar-button-enabled-background-color:  multiply(white, contrast(@background-color, fade(@color-black, 25), fade(@color-black, 65)));
 @toolbar-group-separator-color: @border-color;
 @toolbar-background: url("data:image/svg+xml;charset=utf8,%3Csvg height='@{_toolbar-height}' viewBox='0 0 40 @{_toolbar-height}' width='40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='@{_toolbar-divider-height}' width='100' height='1' fill='@{_toolbar-row-separator-color}'/%3E%3C/svg%3E") left 0 top @toolbar-padding-y @toolbar-background-color;

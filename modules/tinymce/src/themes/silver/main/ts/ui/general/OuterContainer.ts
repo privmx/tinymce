@@ -102,6 +102,10 @@ const factory: UiSketcher.CompositeSketchFactory<OuterContainerSketchDetail, Out
       Composite.parts.getPart(comp, detail, 'toolbar').each((toolbar) => {
         toolbar.getApis<ToolbarApis>().setGroups(toolbar, groups);
       });
+      Promise.resolve().then(() => {
+        const toolbar = Composite.parts.getPart(comp, detail, 'toolbar');
+        toolbar.each((toolbar) => toolbar.getApis<ToolbarApis>().refresh(toolbar));
+      });
     },
     setToolbars: (comp, toolbars) => {
       Composite.parts.getPart(comp, detail, 'multiple-toolbar').each((mToolbar) => {

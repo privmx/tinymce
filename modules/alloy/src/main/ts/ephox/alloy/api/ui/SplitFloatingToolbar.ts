@@ -30,7 +30,7 @@ const refresh = (toolbar: AlloyComponent, memFloatingToolbarButton: Memento.Meme
 };
 
 const factory: CompositeSketchFactory<SplitFloatingToolbarDetail, SplitFloatingToolbarSpec> = (detail, components, spec, externals) => {
-  const memFloatingToolbarButton = Memento.record(
+    const memFloatingToolbarButton = Memento.record(
     FloatingToolbarButton.sketch({
       fetch: () => Future.nu((resolve) => {
         resolve(buildGroups(detail.overflowGroups.get()));
@@ -47,7 +47,7 @@ const factory: CompositeSketchFactory<SplitFloatingToolbarDetail, SplitFloatingT
       markers: {
         toggledClass: detail.markers.overflowToggledClass
       },
-      parts: {
+      parts: <any>{
         button: externals['overflow-button'](),
         toolbar: externals.overflow()
       }

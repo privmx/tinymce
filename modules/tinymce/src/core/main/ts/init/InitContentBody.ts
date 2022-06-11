@@ -157,7 +157,11 @@ const createParser = (editor: Editor): DomParser => {
           node.attr(internalName, value);
           node.attr(name, null);
         } else {
-          node.attr(internalName, editor.convertURL(value, name, node.name));
+          const convertedValue = editor.convertURL(value, name, node.name);
+          if (node.name === 'img' && value.includes('://') && (convertedValue.startsWith('data:') || convertedValue.startsWith('blob:'))) {
+            node.attr(name, convertedValue);
+          }
+          node.attr(internalName, convertedValue);
         }
       }
     }

@@ -23,6 +23,9 @@ const isSystemFontStack = (fontFamily: string): boolean => {
   // Oxide: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   // Bootstrap: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   // Wordpress: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  if (fontFamily.startsWith('source_sans_pro')) {
+    return true;
+  }
   const matchesSystemStack = (): boolean => {
     const fonts = splitFonts(fontFamily.toLowerCase());
     return Arr.forall(systemStackFonts, (font) => fonts.indexOf(font.toLowerCase()) > -1);
@@ -46,7 +49,7 @@ const getSpec = (editor: Editor): SelectSpec => {
       return (format.toLowerCase() === font) || (getFirstFont(format).toLowerCase() === getFirstFont(font).toLowerCase());
     }).orThunk(() => {
       return Optionals.someIf(isSystemFontStack(font), {
-        title: systemFont,
+        title: font.startsWith('source_sans_pro') ? 'Default' : systemFont,
         format: font
       });
     });

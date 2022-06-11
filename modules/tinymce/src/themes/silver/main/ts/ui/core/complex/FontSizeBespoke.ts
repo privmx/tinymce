@@ -103,7 +103,8 @@ const getSpec = (editor: Editor): SelectSpec => {
     updateText: updateSelectMenuText,
     dataset,
     shouldHide: false,
-    isInvalid: Fun.never
+    isInvalid: Fun.never,
+    classes: [ 'font-size-select' ]
   };
 };
 
