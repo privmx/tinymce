@@ -81,7 +81,7 @@ const makeDialog = (settings: LinkDialogInfo, onSubmit: (api: Dialog.DialogInsta
       name: 'url',
       type: 'urlinput',
       filetype: 'file',
-      label: 'URL'
+      label: 'URL',
     }
   ];
 
@@ -109,6 +109,7 @@ const makeDialog = (settings: LinkDialogInfo, onSubmit: (api: Dialog.DialogInsta
 
   const body: Dialog.PanelSpec = {
     type: 'panel',
+    classes: ["tinymce-link-plugin-dialog-form"],
     items: Arr.flatten<Dialog.BodyComponentSpec>([
       urlInput,
       displayText,
