@@ -227,6 +227,10 @@ interface BaseEditorOptions {
 
   // Allow additional dynamic settings
   [key: string]: any;
+
+  // Custom PrivMX options
+  override_getClipboardData?: (clipboardEvent: ClipboardEvent) => Promise<{ [key: string]: string }>;
+  override_setClipboardData?: (clipboardEvent: ClipboardEvent, data: { html: string; text: string }) => Promise<void>;
 }
 
 export interface RawEditorOptions extends BaseEditorOptions {

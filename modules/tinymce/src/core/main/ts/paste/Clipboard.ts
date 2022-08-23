@@ -257,14 +257,15 @@ const registerEventHandlers = (editor: Editor, pasteBin: PasteBin, pasteFormat: 
     }
   });
 
-  editor.on('paste', (e: EditorEvent<ClipboardEvent>) => {
+  editor.on('paste', async (e: EditorEvent<ClipboardEvent>) => {
     if (e.isDefaultPrevented() || isBrokenAndroidClipboardEvent(e)) {
       return;
     }
 
     const plainTextMode = pasteFormat.get() === 'text' || keyboardPastePlainTextState;
     keyboardPastePlainTextState = false;
-    const clipboardContent = getDataTransferItems(e.clipboardData);
+    const overrideGetClipboardData = typeof (Options.overrideGetClipboardData(editor)) === 'function' ? Options.overrideGetClipboardData(editor) : undefined;
+    const clipboardContent = overrideGetClipboardData ? (await overrideGetClipboardData(e)) : getDataTransferItems(e.clipboardData);
 
     if (!hasHtmlOrText(clipboardContent) && pasteImageData(editor, e, getLastRng())) {
       return;

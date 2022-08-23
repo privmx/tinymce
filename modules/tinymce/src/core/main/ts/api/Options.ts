@@ -756,6 +756,15 @@ const register = (editor: Editor) => {
     default: true
   });
 
+  // Custom PrivMX options
+  registerOption('override_getClipboardData', {
+    processor: 'function'
+  });
+
+  registerOption('override_setClipboardData', {
+    processor: 'function'
+  });
+
   // These options must be registered later in the init sequence due to their default values
   editor.on('ScriptsLoaded', () => {
     registerOption('directionality', {
@@ -870,6 +879,10 @@ const getAllowedImageFileTypes = (editor: Editor): string[] =>
 
 const hasTableTabNavigation = option('table_tab_navigation');
 
+// Custom PrivMX options
+const overrideGetClipboardData = option('override_getClipboardData');
+const overrideSetClipboardData = option('override_setClipboardData');
+
 export {
   register,
 
@@ -961,5 +974,8 @@ export {
   getNonEditableClass,
   getNonEditableRegExps,
   getEditableClass,
-  hasTableTabNavigation
+  hasTableTabNavigation,
+
+  overrideGetClipboardData,
+  overrideSetClipboardData
 };

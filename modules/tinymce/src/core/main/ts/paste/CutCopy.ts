@@ -2,6 +2,7 @@ import { Fun } from '@ephox/katamari';
 
 import Editor from '../api/Editor';
 import Env from '../api/Env';
+import * as Options from '../api/Options';
 import Delay from '../api/util/Delay';
 import { EditorEvent } from '../api/util/EventDispatcher';
 import * as InternalHtml from './InternalHtml';
@@ -26,8 +27,11 @@ const setHtml5Clipboard = (clipboardData: DataTransfer | null, html: string, tex
   }
 };
 
-const setClipboardData = (evt: ClipboardEvent, data: SelectionContentData, fallback: FallbackFn, done: DoneFn): void => {
-  if (setHtml5Clipboard(evt.clipboardData, data.html, data.text)) {
+const setClipboardData = (evt: ClipboardEvent, data: SelectionContentData, fallback: FallbackFn, done: DoneFn, editor?: Editor): void => {
+  if (editor && typeof (Options.overrideSetClipboardData(editor)) === 'function') {
+    Options.overrideSetClipboardData(editor)(evt, data);
+    done();
+  } else if (setHtml5Clipboard(evt.clipboardData, data.html, data.text)) {
     evt.preventDefault();
     done();
   } else {
@@ -92,13 +96,13 @@ const cut = (editor: Editor) => (evt: EditorEvent<ClipboardEvent>): void => {
       } else {
         editor.execCommand('Delete');
       }
-    });
+    }, editor);
   }
 };
 
 const copy = (editor: Editor) => (evt: EditorEvent<ClipboardEvent>): void => {
   if (!evt.isDefaultPrevented() && hasSelectedContent(editor)) {
-    setClipboardData(evt, getData(editor), fallback(editor), Fun.noop);
+    setClipboardData(evt, getData(editor), fallback(editor), Fun.noop, editor);
   }
 };
 

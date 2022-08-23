@@ -45,6 +45,15 @@ export default () => {
         contextmenu: "link image table lists",
         statusbar: false,
         
+        override_getClipboardData: async (clipboardEvent) => {
+            clipboardEvent.preventDefault();
+            console.log("override_getClipboardData", {clipboardEvent});
+            return { "text/html": "<b>ht</b>mlcnt", "text/plain": "textcnt" };
+        },
+        override_setClipboardData: async (clipboardEvent, data) => {
+            return console.log("override_setClipboardData got", data, clipboardEvent);
+        },
+        
         file_picker_callback: (callback, value, meta) => {
             console.log("file_picker_callback", { value, meta })
             // if (meta.filetype === "image") {
